@@ -18,8 +18,6 @@ echo "        Bootstrap"
 CFLAGS="-I$BUILD_DIR/include" LDFLAGS="-L$BUILD_DIR/lib" ./configure --prefix=/app/libpostal --datadir=$BUILD_DIR
 
 echo "        Make"
-make
+make -j4
 echo "        Make install"
 make install
-echo "        ldconfig"
-ldconfig
