@@ -1,6 +1,6 @@
 #!/bin/bash
 
-build_dir=$1
+BUILD_DIR=$1
 
 if [ ! -f "$BUILD_DIR/requirements.txt" ] && [ ! -f "$BUILD_DIR/setup.py" ] && [ ! -f "$BUILD_DIR/Pipfile" ]; then
   exit 1

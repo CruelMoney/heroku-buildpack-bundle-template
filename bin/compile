@@ -11,15 +11,15 @@ cd $build_dir
 echo "-----> Installing libpostal"
 sudo apt-get install curl autoconf automake libtool python-dev pkg-config
 
-echo "Cloning"
+echo "        Cloning"
 git clone https://github.com/openvenues/libpostal
 cd libpostal
-echo "bootstrap"
+echo "        bootstrap"
 ./bootstrap.sh
 mkdir temp
-echo "configure"
+echo "        configure"
 ./configure --datadir=./temp
-echo "make"
+echo "        make"
 make
 sudo make install
 sudo ldconfig
