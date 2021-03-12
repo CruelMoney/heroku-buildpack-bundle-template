@@ -2,9 +2,8 @@
 
 build_dir=$1
 
-if [[ -d $build_dir/bundle_template ]]; then
-   echo "Bundle template found, writing .bundle"
-   exit 0
-else
+if [ ! -f "$BUILD_DIR/requirements.txt" ] && [ ! -f "$BUILD_DIR/setup.py" ] && [ ! -f "$BUILD_DIR/Pipfile" ]; then
   exit 1
 fi
+
+echo libpostal
