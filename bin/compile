@@ -6,8 +6,11 @@ build=$1
 cache=$2
 env_dir=$3
 
+rm -rf $cache
+
 mkdir -p $build
 mkdir -p $cache
+
 
 cd $cache
 
