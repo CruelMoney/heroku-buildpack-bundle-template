@@ -26,10 +26,11 @@ make install
 cd -
 echo "-----> Downloading libpostal"
 
+rm -r libpostal
 git clone https://github.com/openvenues/libpostal --depth 1
 cd libpostal/
 ./bootstrap.sh
-LDFLAGS="-L$build/lib" CFLAGS="-I$buildinclude" PKG_CONFIG_PATH="$build/lib/pkgconfig" ./configure --prefix=/app/libpostal --datadir=$build
+LDFLAGS="-L$build/libpostal/lib" CFLAGS="-I$build/libpostal/include" ="$build/libpostal/lib/pkgconfig" ./configure --prefix=/app/libpostal --datadir=$build
 cp ~/vendor/include/snappy* .
 
 make -j4
