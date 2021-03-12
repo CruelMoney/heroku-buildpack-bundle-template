@@ -1,28 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-build_dir=$1
-cache_dir=$2
-env_dir=$3
+BUILD_DIR=$1
+CACHE_DIR=$2
 
-set -e
+mkdir -p $BUILD_DIR
+mkdir -p $CACHE_DIR
 
-cd $build_dir
+echo $BUILD_DIR
+echo $CACHE_DIR
 
 echo "-----> Installing libpostal"
-apt-get install curl autoconf automake libtool python-dev pkg-config
 
-echo "        Cloning"
 git clone https://github.com/openvenues/libpostal
-cd libpostal
-echo "        bootstrap"
+cd libpostal/
+echo "        Bootstrap"
 ./bootstrap.sh
-mkdir temp
-echo "        configure"
-./configure --datadir=./temp
-echo "        make"
-make
-make install
-ldconfig
+CFLAGS="-I$BUILD_DIR/include" LDFLAGS="-L$BUILD_DIR/lib" ./configure --prefix=/app/libpostal --datadir=$BUILD_DIR
 
-echo "        Success"
-exit 0
+echo "        Make"
+make
+echo "        Make install"
+make install
+echo "        ldconfig"
+ldconfig
