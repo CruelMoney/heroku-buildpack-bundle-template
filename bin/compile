@@ -17,3 +17,7 @@ cd libpostal/
 
 make
 make install
+
+echo "-----> Building links"
+ln -vs /app/libpostal/include/libpostal/* /app/.heroku/python/include/
+ln -vs /app/libpostal/lib/* /app/.heroku/python/lib/
