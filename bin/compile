@@ -15,7 +15,7 @@ git clone https://github.com/openvenues/libpostal
 cd libpostal/
 echo "        Bootstrap"
 ./bootstrap.sh
-CFLAGS="-I$BUILD_DIR/include" LDFLAGS="-L$BUILD_DIR/lib" ./configure --prefix=/app/libpostal --datadir=$BUILD_DIR
+./configure --prefix=/app/libpostal --datadir=$BUILD_DIR
 
 echo $BUILD_DIR
 echo $CACHE_DIR
