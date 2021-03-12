@@ -6,7 +6,7 @@ build=$1
 cache=$2
 env_dir=$3
 
-rm -rf $cache
+rm -rf $cache/libpostal
 
 mkdir -p $build
 mkdir -p $cache
