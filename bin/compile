@@ -13,7 +13,7 @@ echo "-----> Downloading libpostal"
 git clone https://github.com/openvenues/libpostal --depth 1
 cd libpostal/
 ./bootstrap.sh
-./configure --prefix=/app/libpostal --datadir=/app/libpostal/data
+./configure --prefix=/app/libpostal --datadir=/app/libpostal
 
 make
 make install
