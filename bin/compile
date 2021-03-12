@@ -9,7 +9,7 @@ set -e
 cd $build_dir
 
 echo "-----> Installing libpostal"
-sudo apt-get install curl autoconf automake libtool python-dev pkg-config
+apt-get install curl autoconf automake libtool python-dev pkg-config
 
 echo "        Cloning"
 git clone https://github.com/openvenues/libpostal
@@ -21,8 +21,8 @@ echo "        configure"
 ./configure --datadir=./temp
 echo "        make"
 make
-sudo make install
-sudo ldconfig
+make install
+ldconfig
 
 echo "        Success"
 exit 0
