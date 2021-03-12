@@ -4,19 +4,54 @@ set -e
 
 build=$1
 cache=$2
+env_dir=$3
 
 mkdir -p $build
 mkdir -p $cache
 
-echo $build
-cd $build
+cd $cache
 
-# git clone https://github.com/openvenues/libpostal --depth 1
-# cd libpostal/
-# ./bootstrap.sh
-# ./configure --prefix=/app/libpostal --datadir=$build 
+export_env_dir() {
+  whitelist_regex=${2:-'LIBPOSTAL_S3_BUCKET'}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
 
-# make -j4
-# make install
+indent() {
+  sed -u 's/^/       /'
+}
 
-echo $build
+export_env_dir
+
+echo "-----> Downloading libpostal"
+
+git clone https://github.com/openvenues/libpostal --depth 1
+cd libpostal/
+./bootstrap.sh
+LDFLAGS="-L$build/libpostal/lib" CFLAGS="-I$build/libpostal/include" PKG_CONFIG_PATH="$build/libpostal/lib/pkgconfig"
+./configure  --enable-fast-install --prefix=/app/libpostal --datadir=/app/libpostal/data
+
+make
+make install
+
+# remove unused directories
+rm -rf $cache
+
+mkdir -p $build/libpostal/data/compressed_data
+
+mv /app/libpostal/* $build/libpostal
+
+
+echo "Building libpostal symbolic links" | indent
+
+mkdir -p $build/vendor/ruby-2.3.3/include
+mkdir -p $build/vendor/ruby-2.3.3/lib
+
+ln -vs $build/libpostal/include/* $build/vendor/ruby-2.3.3/include/
+ln -vs $build/libpostal/lib/* $build/vendor/ruby-2.3.3/lib/
