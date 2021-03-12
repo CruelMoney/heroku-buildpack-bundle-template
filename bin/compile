@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BUILD_DIR=$1
+BUILD_DIR=/app/libpostal
 CACHE_DIR=$2
 
 mkdir -p $BUILD_DIR
